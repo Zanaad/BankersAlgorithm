@@ -72,8 +72,7 @@ public class BankersAlgorithm {
         if (isSafe) {
             System.out.println("System is in a safe state.");
             System.out.println("Safe sequence is: " + Arrays.toString(safeSequence));
-        } else
-            System.out.println("System is not in a safe state.");
+        } else System.out.println("System is not in a safe state.");
 
         return isSafe;
     }
@@ -81,9 +80,49 @@ public class BankersAlgorithm {
     // Helper method to check if resources can satisfy the need
     private boolean canSatisfy(int[] need, int[] available) {
         for (int j = 0; j < need.length; j++) {
-            if (need[j] > available[j])
-                return false;
+            if (need[j] > available[j]) return false;
         }
         return true;
+    }
+
+    // Request resources for a given thread
+    public boolean requestResources(int threadNum, int[] request) {
+        // Check if the request is greater than the need
+        for (int j = 0; j < numResources; j++) {
+            if (request[j] > need[threadNum][j]) {
+                System.out.println("Thread " + threadNum + " has exceeded its maximum claim.");
+                return false;
+            }
+        }
+
+        // Check if the request is greater than the available resources
+        for (int j = 0; j < numResources; j++) {
+            if (request[j] > available[j]) {
+                System.out.println("Thread " + threadNum + "'s request cannot be granted because there are not enough available resources.");
+                return false;
+            }
+        }
+
+        // Allocate the requested resources
+        for (int j = 0; j < numResources; j++) {
+            available[j] -= request[j];
+            allocation[threadNum][j] += request[j];
+            need[threadNum][j] -= request[j];
+        }
+
+        // Check if the system is in a safe state after allocation
+        if (isSafeState()) {
+            System.out.println("Request by thread " + threadNum + " can be granted immediately.");
+            return true;
+        } else {
+            // Roll back the allocation
+            for (int j = 0; j < numResources; j++) {
+                available[j] += request[j];
+                allocation[threadNum][j] -= request[j];
+                need[threadNum][j] += request[j];
+            }
+            System.out.println("Request by thread " + threadNum + " cannot be granted immediately. Rolling back.");
+            return false;
+        }
     }
 }

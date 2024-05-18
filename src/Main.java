@@ -1,40 +1,20 @@
-import java.util.Scanner;
-
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("Please enter the number of resources:");
-        int m = sc.nextInt();
+        int[][] allocation = {{0, 0, 1, 2}, {1, 0, 0, 0}, {1, 3, 5, 4}, {0, 6, 3, 2}, {0, 0, 1, 4}};
 
-        System.out.println("Please enter the number of threads:");
-        int n = sc.nextInt();
+        int[][] max = {{0, 0, 1, 2}, {1, 7, 5, 0}, {2, 3, 5, 6}, {0, 6, 5, 2}, {0, 6, 5, 6}};
 
-        System.out.println("Please enter the allocation matrix:");
-        int[][] allocation = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                allocation[i][j] = sc.nextInt();
-            }
-        }
-
-        System.out.println("Please enter the max matrix:");
-        int[][] max = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                max[i][j] = sc.nextInt();
-            }
-        }
-
-        System.out.println("Please enter the available resources:");
-        int[] available = new int[m];
-        for (int j = 0; j < m; j++) {
-            available[j] = sc.nextInt();
-        }
+        int[] available = {1, 5, 2, 0};
 
         BankersAlgorithm ba = new BankersAlgorithm(allocation, max, available);
 
         ba.isSafeState();
+
+        // Request resources
+        int[] request = {0, 4, 2, 0};
+        int threadNum = 1;
+        ba.requestResources(threadNum, request);
     }
 }
