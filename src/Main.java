@@ -1,30 +1,40 @@
+import java.util.Scanner;
+
 public class Main {
+
     public static void main(String[] args) {
-        // Allocation matrix
-        int[][] allocation = {
-                {0, 0, 1, 2},
-                {1, 0, 0, 0},
-                {1, 3, 5, 4},
-                {0, 6, 3, 2},
-                {0, 0, 1, 4}
-        };
+        Scanner sc = new Scanner(System.in);
 
-        // Max matrix
-        int[][] max = {
-                {0, 0, 1, 2},
-                {1, 7, 5, 0},
-                {2, 3, 5, 6},
-                {0, 6, 5, 2},
-                {0, 6, 5, 6}
-        };
+        System.out.println("Please enter the number of resources:");
+        int m = sc.nextInt();
 
-        // Available resources
-        int[] available = {1, 5, 2, 0};
+        System.out.println("Please enter the number of threads:");
+        int n = sc.nextInt();
 
-        // Initialize Banker's Algorithm
+        System.out.println("Please enter the allocation matrix:");
+        int[][] allocation = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                allocation[i][j] = sc.nextInt();
+            }
+        }
+
+        System.out.println("Please enter the max matrix:");
+        int[][] max = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                max[i][j] = sc.nextInt();
+            }
+        }
+
+        System.out.println("Please enter the available resources:");
+        int[] available = new int[m];
+        for (int j = 0; j < m; j++) {
+            available[j] = sc.nextInt();
+        }
+
         BankersAlgorithm ba = new BankersAlgorithm(allocation, max, available);
 
-        // Check if the system is in a safe state initially
         ba.isSafeState();
     }
 }
