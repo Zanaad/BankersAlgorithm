@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -12,9 +14,21 @@ public class Main {
 
         ba.isSafeState();
 
-        // Request resources
-        int[] request = {0, 4, 2, 0};
-        int threadNum = 1;
-        ba.requestResources(threadNum, request);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Do you want to request resources for a thread? Type y/n");
+        char ans = sc.next().charAt(0);
+        if (ans == 'y') {
+            System.out.println("Enter the number of the thread that requires resources:");
+            int threadNum = sc.nextInt();
+            System.out.println("Enter the resources required by T[" + threadNum + "]");
+            int[] request = new int[available.length];
+            for (int i = 0; i < available.length; i++) {
+                request[i] = sc.nextInt();
+            }
+            ba.requestResources(threadNum, request);
+        } else {
+            System.out.println("No resource request made. Exiting program.");
+        }
+
     }
 }
